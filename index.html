@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CV Builder & Job Matching Platform</title>
+    <link rel="stylesheet" href="main.css">
+    <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+</head>
+<body>
+    <!-- CV Builder Form -->
+    <form id="cvForm">
+        <input type="text" name="fullName" placeholder="Full Name" required><br>
+        <input type="email" name="email" placeholder="Email" required><br>
+        <textarea name="education" placeholder="Education (e.g., BSc in Computer Science from XYZ University)" required></textarea><br>
+        <textarea name="experience" placeholder="Work Experience (e.g., 2 years as a Software Developer at ABC Corp)" required></textarea><br>
+        <textarea name="skills" placeholder="Skills (comma separated)" required></textarea><br>
+        <button type="submit">Generate CV</button>
+    </form>
+
+    <div id="successMessage" style="display:none;">Your information has been submitted. Check your email for the generated CV.</div>
+
+    <script src="send_email.js"></script>
+</body>
+</html>
