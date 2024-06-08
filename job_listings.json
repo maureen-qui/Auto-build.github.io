@@ -1,0 +1,15 @@
+[
+    {
+        "title": "Software Engineer",
+        "company": "ABC Inc.",
+        "skills": ["JavaScript", "Node.js", "React"],
+        "link": "https://example.com/job1"
+    },
+    {
+        "title": "Data Analyst",
+        "company": "XYZ Corp.",
+        "skills": ["SQL", "Python", "Data Visualization"],
+        "link": "https://example.com/job2"
+    }
+
+]
