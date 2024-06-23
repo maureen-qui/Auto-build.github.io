@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CV Builder & Job Matching Platform</title>
+    <link rel="stylesheet" href="main.css">
+    <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-storage.js"></script>
+    <script>
+        // Function to add more Experience fields
+        function addExperience() {
+            var container = document.querySelector('.experience');
+            var newExperience = container.cloneNode(true);
+            container.parentNode.insertBefore(newExperience, container.nextSibling);
+        }
+
+        // Function to add more Education fields
+        function addEducation() {
+            var container = document.querySelector('.education');
+            var newEducation = container.cloneNode(true);
+            container.parentNode.insertBefore(newEducation, container.nextSibling);
+        }
+
+        // Function to add more Certification fields
+        function addCertification() {
+            var container = document.querySelector('.certification');
+            var newCertification = container.cloneNode(true);
+            container.parentNode.insertBefore(newCertification, container.nextSibling);
+        }
+
+        // Function to add more Affiliation fields
+        function addAffiliation() {
+            var container = document.querySelector('.affiliation');
+            var newAffiliation = container.cloneNode(true);
+            container.parentNode.insertBefore(newAffiliation, container.nextSibling);
+        }
+
+        // Function to add more Publication fields
+        function addPublication() {
+            var container = document.querySelector('.publication');
+            var newPublication = container.cloneNode(true);
+            container.parentNode.insertBefore(newPublication, container.nextSibling);
+        }
+
+        // Function to add more Award fields
+        function addAward() {
+            var container = document.querySelector('.award');
+            var newAward = container.cloneNode(true);
+            container.parentNode.insertBefore(newAward, container.nextSibling);
+        }
+
+        // Function to add more Volunteer Experience fields
+        function addVolunteer() {
+            var container = document.querySelector('.volunteer');
+            var newVolunteer = container.cloneNode(true);
+            container.parentNode.insertBefore(newVolunteer, container.nextSibling);
+        }
+
+        // Function to add more Project fields
+        function addProject() {
+            var projectContainer = document.querySelector('.projects');
+            var newProjectDiv = document.createElement('div');
+            newProjectDiv.classList.add('project');
+            newProjectDiv.innerHTML = `
+                <label for="projectTitle">Project Title:</label>
+                <input type="text" name="projectTitle[]" placeholder="Project Title"><br>
+                <label for="projectRole">Your Role:</label>
+                <input type="text" name="projectRole[]" placeholder="Your Role"><br>
+                <textarea name="projectDescription[]" placeholder="Brief Description of the Project"></textarea><br>
+                <textarea name="projectAchievements[]" placeholder="Key Achievements or Outcomes"></textarea><br>
+            `;
+            projectContainer.appendChild(newProjectDiv);
+        }
+
+        // Function to add more Reference fields
+        function addReferences() {
+            var referenceContainer = document.querySelector('.references');
+            var newReferenceDiv = document.createElement('div');
+            newReferenceDiv.classList.add('reference');
+            newReferenceDiv.innerHTML = `
+                <label for="referenceName">Name:</label>
+                <input type="text" name="referenceName[]" placeholder="Name"><br>
+                <label for="referencePosition">Position:</label>
+                <input type="text" name="referencePosition[]" placeholder="Position"><br>
+                <label for="referenceCompany">Company:</label>
+                <input type="text" name="referenceCompany[]" placeholder="Company"><br>
+                <input type="tel" name="referencePhone[]" placeholder="Contact Information"><br>
+            `;
+            referenceContainer.appendChild(newReferenceDiv);
+        }
+
+        // Function to add more Skill fields
+        function addSkill() {
+            var container = document.getElementById('skillsContainer');
+            var newSkillInput = document.createElement('textarea');
+            newSkillInput.setAttribute('name', 'skills');
+            newSkillInput.setAttribute('placeholder', 'Skills (comma separated)');
+            container.appendChild(newSkillInput);
+            container.appendChild(document.createElement('br'));
+        }
+
+        // Example function to generate CV using OpenAI's GPT-3
+        async function generateCV() {
+            // Gather data from the form
+            let formData = new FormData(document.getElementById('cvForm'));
+            
+            // Example: Prepare data for GPT-3
+            let context = `Personal Information:\n`;
+            formData.forEach((value, key) => {
+                context += `${key}: ${value}\n`;
+            });
+
+            // Example: Use GPT-3 to generate CV content
+            try {
+                const response = await gpt3.complete({
+                    model: 'text-davinci-003',
+                    messages: [{ role: 'system', content: context }],
+                });
+                
+                // Example: Display generated CV content
+                console.log(response.data.choices[0].text);
+                alert('CV generated successfully! Check console for details.');
+            } catch (error) {
+                console.error('Failed to generate CV:', error);
+                alert('Failed to generate CV. Please try again later.');
+            }
+        }
+
+        // Example function to match generated CV with job openings
+        async function matchJobOpenings(cvContent) {
+            // Example: Fetch job openings from an API
+            try {
+                const response = await axios.get('https://example.com/api/job-openings');
+                const jobOpenings = response.data;
+
+                // Example: Match CV content with job openings
+                jobOpenings.forEach(job => {
+                    // Example: Perform job matching logic
+                    // Compare CV content with job requirements
+                });
+
+                // Example: Display matched job openings
+                console.log('Matched job openings:', jobOpenings);
+                alert('Job matching completed! Check console for details.');
+            } catch (error) {
+                console.error('Failed to match job openings:', error);
+                alert('Failed to match job openings. Please try again later.');
+            }
+        }
+    </script>
+</head>
+<body>
+    <!-- CV Builder Form -->
+    <form id="cvForm">
+        <!-- Contact Information -->
+        <h3>Contact Information</h3>
+        <input type="text" name="fullName" placeholder="Full Name" required><br>
+        <input type="text" name="professionalTitle" placeholder="Professional Title" required><br>
+        <input type="text" name="address" placeholder="Address" required><br>
+        <input type="tel" name="phoneNumber" placeholder="Phone Number" required><br>
+        <input type="email" name="email" placeholder="Email" required><br>
+        <input type="url" name="linkedin" placeholder="LinkedIn Profile (optional)"><br>
+
+        <!-- Personal Profile/Objective -->
+        <h3>Personal Profile/Objective</h3>
+        <textarea name="personalProfile" placeholder="Brief Summary" required></textarea><br>
+
+        <!-- Professional Experience -->
+        <h3>Professional Experience</h3>
+        <div class="experience">
+            <input type="text" name="jobTitle[]" placeholder="Job Title" required><br>
+            <input type="text" name="companyName[]" placeholder="Company Name" required><br>
+            <input type="text" name="location[]" placeholder="Location (City, Country)" required><br>
+            <input type="text" name="employmentDates[]" placeholder="Dates of Employment (Month/Year - Month/Year)" required><br>
+            <textarea name="responsibilities[]" placeholder="Key Responsibilities and Achievements" required></textarea><br>
+        </div>
+        <button type="button" onclick="addExperience()">Add More Experience</button><br>
+
+        <!-- Education -->
+        <h3>Education</h3>
+        <div class="education">
+            <input type="text" name="degree[]" placeholder="Degree" required><br>
+            <input type="text" name="institutionName[]" placeholder="University/Institution Name" required><br>
+            <input type="text" name="educationLocation[]" placeholder="Location (City, Country)" required><br>
+            <input type="text" name="educationDates[]" placeholder="Dates Attended (Month/Year - Month/Year)" required><br>
+            <textarea name="keyCourses[]" placeholder="Key Courses, Projects, or Thesis (optional)"></textarea><br>
+        </div>
+        <button type="button" onclick="addEducation()">Add More Education</button><br>
+
+        <!-- Skills -->
+        <h3>Skills</h3>
+        <div id="skillsContainer">
+            <textarea name="skills" placeholder="Skills (comma separated)" required></textarea><br>
+        </div>
+        <button type="button" onclick="addSkill()">Add More Skill</button><br>
+
+        <!-- Certifications and Licenses -->
+        <h3>Certifications and Licenses</h3>
+        <div class="certification">
+            <input type="text" name="certificationName[]" placeholder="Certification Name"><br>
+            <input type="text" name="issuingOrganization[]" placeholder="Issuing Organization"><br>
+            <input type="text" name="certificationDate[]" placeholder="Date Obtained"><br>
+            <input type="text" name="expiryDate[]" placeholder="Expiry Date (if applicable)"><br>
+        </div>
+        <button type="button" onclick="addCertification()">Add More Certification</button><br>
+
+        <!-- Professional Affiliations -->
+        <h3>Professional Affiliations</h3>
+        <div class="affiliation">
+            <input type="text" name="organizationName[]" placeholder="Name of the Organization"><br>
+            <input type="text" name="role[]" placeholder="Your Role or Membership Type"><br>
+            <input type="text" name="affiliationDates[]" placeholder="Dates of Membership"><br>
+        </div>
+        <button type="button" onclick="addAffiliation()">Add More Affiliation</button><br>
+
+        <!-- Publications and Presentations -->
+        <h3>Publications and Presentations</h3>
+        <div class="publication">
+            <input type="text" name="publicationTitle[]" placeholder="Title of the Publication or Presentation"><br>
+            <input type="text" name="publicationVenue[]" placeholder="Name of the Journal, Conference, or Event"><br>
+            <input type="text" name="publicationDate[]" placeholder="Date of Publication or Presentation"><br>
+            <textarea name="publicationDescription[]" placeholder="Brief Description (optional)"></textarea><br>
+        </div>
+        <button type="button" onclick="addPublication()">Add More Publication</button><br>
+
+        <!-- Awards and Honors -->
+        <h3>Awards and Honors</h3>
+        <div class="award">
+            <input type="text" name="awardName[]" placeholder="Name of the Award"><br>
+            <input type="text" name="issuingAwardOrganization[]" placeholder="Issuing Organization"><br>
+            <input type="text" name="awardDate[]" placeholder="Date Received"><br>
+            <textarea name="awardDescription[]" placeholder="Brief Description (optional)"></textarea><br>
+        </div>
+        <button type="button" onclick="addAward()">Add More Award</button><br>
+
+        <!-- Volunteer Experience -->
+        <h3>Volunteer Experience</h3>
+        <div class="volunteer">
+            <input type="text" name="volunteerRole[]" placeholder="Volunteer Role"><br>
+            <input type="text" name="volunteerOrganization[]" placeholder="Organization Name"><br>
+            <input type="text" name="volunteerLocation[]" placeholder="Location (City, Country)"><br>
+            <input type="text" name="volunteerDates[]" placeholder="Dates of Involvement (Month/Year - Month/Year)"><br>
+            <textarea name="volunteerResponsibilities[]" placeholder="Key Responsibilities and Achievements"></textarea><br>
+        </div>
+        <button type="button" onclick="addVolunteer()">Add More Volunteer Experience</button><br>
+
+        <!-- Projects -->
+        <h3>Projects</h3>
+        <div class="projects">
+            <div class="project">
+                <label for="projectTitle">Project Title:</label>
+                <input type="text" name="projectTitle[]" placeholder="Project Title"><br>
+                <label for="projectRole">Your Role:</label>
+                <input type="text" name="projectRole[]" placeholder="Your Role"><br>
+                <textarea name="projectDescription[]" placeholder="Brief Description of the Project"></textarea><br>
+                <textarea name="projectAchievements[]" placeholder="Key Achievements or Outcomes"></textarea><br>
+            </div>
+        </div>
+        <button type="button" onclick="addProject()">Add More Project</button><br>
+
+        <!-- References -->
+        <h3>References</h3>
+        <div class="references">
+            <div class="reference">
+                <label for="referenceName">Name:</label>
+                <input type="text" name="referenceName[]" placeholder="Name"><br>
+                <label for="referencePosition">Position:</label>
+                <input type="text" name="referencePosition[]" placeholder="Position"><br>
+                <label for="referenceCompany">Company:</label>
+                <input type="text" name="referenceCompany[]" placeholder="Company"><br>
+                <input type="tel" name="referencePhone[]" placeholder="Contact Information"><br>
+            </div>
+        </div>
+        <button type="button" onclick="addReferences()">Add More References</button><br>
+
+        <!-- Additional Tips -->
+        <h3>Additional Tips for a Professional CV</h3>
+        <!-- You can add additional tips here -->
+
+        <!-- Upload CV File -->
+        <h3>Upload CV File</h3>
+        <input type="file" id="cvFile" name="cvFile" accept=".pdf,.doc,.docx,.txt"><br>
+
+        <!-- Submit Button -->
+        <button type="submit">Generate CV</button>
+    </form>
+
+    <!-- Success Message -->
+    <div id="successMessage" style="display:none;" class="success">Your information has been submitted. Check your email for the generated CV.</div>
+
+    <!-- JavaScript File -->
+    <script src="send_email.js"></script>
+</body>
+</html>
+
